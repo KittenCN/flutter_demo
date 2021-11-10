@@ -3,32 +3,10 @@ import 'package:flutter/material.dart';
 class FirstPage extends StatefulWidget {
   const FirstPage({Key? key}) : super(key: key);
   @override
-  _FirstPage createState() => _FirstPage();
+  _MyHomePateState createState() => _MyHomePateState();
 }
 
-class _FirstPage extends State<FirstPage> {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'Flutter Demo',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-        ),
-        home: const MyHomePate(title: 'Flutter Demo Home Page'));
-  }
-}
-
-class MyHomePate extends StatefulWidget {
-  const MyHomePate({Key? key, required this.title}) : super(key: key);
-  final String title;
-  @override
-  _MyHomePateState createState() {
-    return _MyHomePateState();
-  }
-}
-
-class _MyHomePateState extends State<MyHomePate> {
+class _MyHomePateState extends State<FirstPage> {
   int _counter = 0;
   String _cntState = 'odd';
   void _runner() {
@@ -51,7 +29,14 @@ class _MyHomePateState extends State<MyHomePate> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(widget.title)),
+      appBar: AppBar(
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
+          title: const Text('First Page')),
       body: Center(
         child: Column(
             mainAxisAlignment: MainAxisAlignment.center,

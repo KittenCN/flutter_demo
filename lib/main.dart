@@ -21,6 +21,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+        debugShowCheckedModeBanner: false,
         routes: Map.fromEntries(menus.map((e) => MapEntry(e.route, e.builder))),
         home: const HomePage());
   }
