@@ -1,73 +1,58 @@
 import 'package:flutter/material.dart';
+import 'src/first_page.dart';
 
 void main() {
   return runApp(const MyApp());
 }
+
+class Menu {
+  final String name;
+  final String route;
+  final WidgetBuilder builder;
+  Menu({required this.name, required this.route, required this.builder});
+}
+
+final menus = [
+  Menu(name: 'FirstPage', route: '/FirstPage', builder: (context) => const FirstPage())
+];
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'Flutter Demo',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-        ),
-        home: const MyHomePate(title: 'Flutter Demo Home Page'));
+        routes: Map.fromEntries(menus.map((e) => MapEntry(e.route, e.builder))),
+        home: const HomePage());
   }
 }
 
-class MyHomePate extends StatefulWidget {
-  const MyHomePate({Key? key, required this.title}) : super(key: key);
-  final String title;
+class HomePage extends StatefulWidget {
+  const HomePage({Key? key}) : super(key: key);
   @override
-  _MyHomePateState createState() {
-    return _MyHomePateState();
-  }
+  _HomePageState createState() => _HomePageState();
 }
 
-class _MyHomePateState extends State<MyHomePate> {
-  int _counter = 0;
-  String _cntState = 'odd';
-  void _runner(){
-    _incrementCounter();
-    _checkCounter();
-  }
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
-  void _checkCounter() {
-    setState(() {
-      _cntState = _counter % 2 == 0 ? 'even' : 'odd';
-    });
-  }
+class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(widget.title)),
-      body: Center(
-        child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              const Text('You have pushed the button this many times:'),
-              Text(
-                '$_counter',
-                style: Theme.of(context).textTheme.headline4,
-              ),
-              Text(
-                _cntState,
-                style: Theme.of(context).textTheme.headline4,
-              ),
-            ]),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _runner,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ),
+        appBar: AppBar(
+          title: const Text('Home'),
+        ),
+        body: ListView(children: [...menus.map((e) => MenuTile(menu: e))]));
+  }
+}
+
+class MenuTile extends StatelessWidget {
+  final Menu? menu;
+  const MenuTile({Key? key, this.menu}) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      title: Text(menu!.name),
+      onTap: () {
+        Navigator.pushNamed(context, menu!.route);
+      },
     );
   }
 }
