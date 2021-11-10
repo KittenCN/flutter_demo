@@ -29,26 +29,42 @@ class MyHomePate extends StatefulWidget {
 
 class _MyHomePateState extends State<MyHomePate> {
   int _counter = 0;
-  void _incrementCounter(){
-    setState((){
+  String _cntState = 'odd';
+  void _runner(){
+    _incrementCounter();
+    _checkCounter();
+  }
+  void _incrementCounter() {
+    setState(() {
       _counter++;
     });
   }
+  void _checkCounter() {
+    setState(() {
+      _cntState = _counter % 2 == 0 ? 'even' : 'odd';
+    });
+  }
   @override
-  Widget build(BuildContext context){
+  Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title:Text(widget.title)),
+      appBar: AppBar(title: Text(widget.title)),
       body: Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children:<Widget>[
-            const Text('You have pushed the button this many times:'),
-            Text('$_counter', style: Theme.of(context).textTheme.headline4,)
-          ]
-        ),
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              const Text('You have pushed the button this many times:'),
+              Text(
+                '$_counter',
+                style: Theme.of(context).textTheme.headline4,
+              ),
+              Text(
+                _cntState,
+                style: Theme.of(context).textTheme.headline4,
+              ),
+            ]),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
+        onPressed: _runner,
         tooltip: 'Increment',
         child: const Icon(Icons.add),
       ),
