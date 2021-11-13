@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'src/first_page.dart';
+import 'src/second_page.dart';
 
 void main() {
   return runApp(const MyApp());
@@ -13,7 +14,14 @@ class Menu {
 }
 
 final menus = [
-  Menu(name: 'FirstPage', route: '/FirstPage', builder: (context) => const FirstPage())
+  Menu(
+      name: 'FirstPage',
+      route: '/FirstPage',
+      builder: (context) => const FirstPage()),
+  Menu(
+      name: 'SecondPage',
+      route: '/SecondPage',
+      builder: (context) => const SecondPage()),
 ];
 
 class MyApp extends StatelessWidget {
