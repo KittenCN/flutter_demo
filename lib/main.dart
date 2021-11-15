@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'src/first_page.dart';
 import 'src/second_page.dart';
 import 'src/third_page.dart';
+import 'src/four_page.dart';
 
 void main() {
   return runApp(const MyApp());
@@ -27,6 +28,10 @@ final menus = [
       name: 'ThirdPage',
       route: '/ThirdPage',
       builder: (context) => const ThirdPage()),
+  Menu(
+      name: 'FourPage',
+      route: '/FourPage',
+      builder: (context) => const FourPage()),
 ];
 
 class MyApp extends StatelessWidget {

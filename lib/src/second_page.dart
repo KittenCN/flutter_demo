@@ -52,7 +52,7 @@ class _SecondPageState extends State<SecondPage> {
         title: const Text('Second Page'),
       ),
       body: Center(
-          child: Wrap(children: <Widget>[
+          child: Column(children: <Widget>[
             TextField(
               autofocus: true,
               decoration: const InputDecoration(
