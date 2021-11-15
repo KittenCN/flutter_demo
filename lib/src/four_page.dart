@@ -25,7 +25,6 @@ class FourPage extends StatelessWidget {
   }
 }
 
-
 class FavoriteWidget extends StatefulWidget {
   const FavoriteWidget({Key? key}) : super(key: key);
 
@@ -77,4 +76,3 @@ class _FavoriteWidgetState extends State<FavoriteWidget> {
     );
   }
 }
-
