@@ -1,4 +1,3 @@
-import 'dart:math';
 import 'package:flutter/material.dart';
 
 class Game2048Panel extends StatefulWidget {
@@ -10,6 +9,7 @@ class Game2048Panel extends StatefulWidget {
 }
 
 class _Game2048PanelState extends State<Game2048Panel> {
+  // ignore: constant_identifier_names
   static const int SIZE = 4;
   bool _isGameOver = false;
   @override

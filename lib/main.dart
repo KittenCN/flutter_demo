@@ -4,6 +4,7 @@ import 'src/second_page.dart';
 import 'src/third_page.dart';
 import 'src/four_page.dart';
 import 'src/five_page.dart';
+import 'src/six_page.dart';
 
 void main() {
   return runApp(const MyApp());
@@ -37,6 +38,10 @@ final menus = [
       name: 'FivePage',
       route: '/FivePage',
       builder: (context) => const FivePage()),
+  Menu(
+      name: 'SixPage',
+      route: '/SixPage',
+      builder: (context) => const SixPage()),
 ];
 
 class MyApp extends StatelessWidget {
@@ -75,6 +80,7 @@ class MenuTile extends StatelessWidget {
     return ListTile(
       title: Text(menu!.name),
       onTap: () {
+        FocusScope.of(context).requestFocus(FocusNode());
         Navigator.pushNamed(context, menu!.route);
       },
     );

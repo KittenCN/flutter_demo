@@ -21,7 +21,7 @@ class _FivePageState extends State<FivePage> {
           child: Column(
             children: [
               Flexible(child: gameHeader()),
-              Flexible(flex: 2, child: Game2048Panel()),
+              const Flexible(flex: 2, child: Game2048Panel()),
             ],
           ),
         ));
