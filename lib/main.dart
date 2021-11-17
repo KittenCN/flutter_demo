@@ -5,6 +5,7 @@ import 'src/third_page.dart';
 import 'src/four_page.dart';
 import 'src/five_page.dart';
 import 'src/six_page.dart';
+import 'src/six_page_sqlite.dart';
 
 void main() {
   return runApp(const MyApp());
@@ -42,6 +43,10 @@ final menus = [
       name: 'SixPage',
       route: '/SixPage',
       builder: (context) => const SixPage()),
+  Menu(
+      name: 'SixPageSqlite',
+      route: '/SixPageSqlite',
+      builder: (context) => const SixPageLite()),
 ];
 
 class MyApp extends StatelessWidget {
