@@ -5,9 +5,6 @@ class DatabaseHelper {
   late Database _database;
 
   Future<Database> get database async {
-    if (_database != null) {
-      return _database;
-    }
     _database = await _initDB();
     return _database;
   }
@@ -41,13 +38,13 @@ class DatabaseHelper {
     List todos = result.isNotEmpty
         ? result.map((todo) => Todo.fromMap(todo)).toList()
         : [];
-    return todos[0];
+    return todos;
   }
 
   Future<int> update(Todo todo) async {
     var db = await database;
-    var result = await db.update('todo', todo.toMap(),
-        where: 'id = ?', whereArgs: [todo.id]);
+    var result = await db
+        .update('todo', todo.toMap(), where: 'id = ?', whereArgs: [todo.id]);
     return result;
   }
 
@@ -63,10 +60,10 @@ class DatabaseHelper {
     return result;
   }
 
-  Future<int> getCount() async {
+  Future<int?> getCount() async {
     var db = await database;
-    var result = Sqflite.firstIntValue(
-        await db.rawQuery('SELECT COUNT(*) FROM todo'));
+    var result =
+        Sqflite.firstIntValue(await db.rawQuery('SELECT COUNT(*) FROM todo'));
     return result;
   }
 
@@ -78,7 +75,8 @@ class DatabaseHelper {
 
   Future<List> getTodosByCheck(int isCheck) async {
     var db = await database;
-    var result = await db.query('todo', where: 'isCheck = ?', whereArgs: [isCheck]);
+    var result =
+        await db.query('todo', where: 'isCheck = ?', whereArgs: [isCheck]);
     List todos = result.isNotEmpty
         ? result.map((todo) => Todo.fromMap(todo)).toList()
         : [];
@@ -87,22 +85,25 @@ class DatabaseHelper {
 
   Future<List> getTodosByDescription(String description) async {
     var db = await database;
-    var result = await db.query('todo', where: 'description = ?', whereArgs: [description]);
+    var result = await db
+        .query('todo', where: 'description = ?', whereArgs: [description]);
     List todos = result.isNotEmpty
         ? result.map((todo) => Todo.fromMap(todo)).toList()
         : [];
     return todos;
   }
 
-  Future<List> getTodosByCheckAndDescription(int isCheck, String description) async {
+  Future<List> getTodosByCheckAndDescription(
+      int isCheck, String description) async {
     var db = await database;
-    var result = await db.query('todo', where: 'isCheck = ? AND description = ?', whereArgs: [isCheck, description]);
+    var result = await db.query('todo',
+        where: 'isCheck = ? AND description = ?',
+        whereArgs: [isCheck, description]);
     List todos = result.isNotEmpty
         ? result.map((todo) => Todo.fromMap(todo)).toList()
         : [];
     return todos;
   }
-
 }
 
 class Todo {
@@ -125,5 +126,4 @@ class Todo {
     t.isCheck = todo['ischeck'];
     return t;
   }
-
 }

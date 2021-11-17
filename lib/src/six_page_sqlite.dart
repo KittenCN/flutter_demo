@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sqflite/sqflite.dart';
 import 'six_page_sqlite_dao.dart';
 
 class SixPageLite extends StatefulWidget {
@@ -13,6 +14,18 @@ class _SixPageLiteState extends State<SixPageLite> {
   var strMemList = [];
   var boolMemList = [];
   DatabaseHelper databaseHelper = DatabaseHelper();
+
+ @override
+  void initState() {
+      super.initState();
+      var strList = DatabaseHelper().getTodos();
+      _controller.addListener(() {
+        setState(() {
+          strMemList = _controller.text.split(',');
+          boolMemList = strMemList.map((str) => str.isNotEmpty).toList();
+        });
+      });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +54,12 @@ class _SixPageLiteState extends State<SixPageLite> {
           onPressed: () {
             setState(() {
               strMemList.add(_controller.text);
-              boolMemList.add(false);
+              boolMemList.add(0);
+              Todo todo = Todo();
+              todo.id = strMemList.length;
+              todo.description = _controller.text;
+              todo.isCheck = 0;
+              databaseHelper.insert(todo);
               _controller.clear();
               FocusScope.of(context).requestFocus(FocusNode());
             });

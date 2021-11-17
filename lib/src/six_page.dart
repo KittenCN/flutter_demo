@@ -11,6 +11,7 @@ class _SixPageState extends State<SixPage> {
   final TextEditingController _controller = TextEditingController();
   var strMemList = [];
   var boolMemList = [];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -52,17 +53,16 @@ class _SixPageState extends State<SixPage> {
           itemBuilder: (BuildContext context, int index) {
             return Row(children: <Widget>[
               Expanded(
-                child: ListTile(
-                  title: Text(strMemList[index]),
-                  tileColor: boolMemList[index] ? Colors.red : null,
-                  onTap: () {
-                    setState(() {
-                      // strMemList.removeAt(index);
-                      FocusScope.of(context).requestFocus(FocusNode());
-                    });
-                  },
-                )
-              ),
+                  child: ListTile(
+                title: Text(strMemList[index]),
+                tileColor: boolMemList[index] ? Colors.red : null,
+                onTap: () {
+                  setState(() {
+                    // strMemList.removeAt(index);
+                    FocusScope.of(context).requestFocus(FocusNode());
+                  });
+                },
+              )),
               Checkbox(
                 value: boolMemList[index],
                 onChanged: (bool? value) {
