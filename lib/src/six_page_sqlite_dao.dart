@@ -62,9 +62,9 @@ class DatabaseHelper {
 
   Future<int?> getCount() async {
     var db = await database;
-    var result =
+    int? result =
         Sqflite.firstIntValue(await db.rawQuery('SELECT COUNT(*) FROM todo'));
-    return result;
+    return result ?? 0;
   }
 
   Future<Todo> getTodo(int id) async {
@@ -104,18 +104,26 @@ class DatabaseHelper {
         : [];
     return todos;
   }
+  Future<List> getMemList() async {
+    var db = await database;
+    var result = await db.query('todo');
+    List mems = result.isNotEmpty
+        ? result.map((todo) => Todo.fromMap(todo)).toList()
+        : [];
+    return mems;
+  } 
 }
 
 class Todo {
   late int id;
   late String description;
-  late int isCheck;
+  late int ischeck;
 
   Map<String, dynamic> toMap() {
     return {
       'id': id,
       'description': description,
-      'ischeck': isCheck,
+      'ischeck': ischeck,
     };
   }
 
@@ -123,7 +131,7 @@ class Todo {
     Todo t = Todo();
     t.id = todo['id'];
     t.description = todo['description'];
-    t.isCheck = todo['ischeck'];
+    t.ischeck = todo['ischeck'];
     return t;
   }
 }

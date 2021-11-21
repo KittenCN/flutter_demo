@@ -15,16 +15,26 @@ class _SixPageLiteState extends State<SixPageLite> {
   var boolMemList = [];
   DatabaseHelper databaseHelper = DatabaseHelper();
 
- @override
+  Future getMemList() async {
+    List list = await databaseHelper.getMemList();
+    setState(() {
+      for (int i = 0; i < list.length; i++) {
+        strMemList.add(list[i].description);
+        boolMemList.add(list[i].ischeck);
+      }
+    });
+  }
+
+  @override
   void initState() {
-      super.initState();
-      var strList = DatabaseHelper().getTodos();
-      _controller.addListener(() {
-        setState(() {
-          strMemList = _controller.text.split(',');
-          boolMemList = strMemList.map((str) => str.isNotEmpty).toList();
-        });
+    super.initState();
+    _controller.addListener(() {
+      setState(() {
+        getMemList();
+        // strMemList = _controller.text.split(',');  
+        // boolMemList = strMemList.map((str) => str.isNotEmpty).toList();
       });
+    });
   }
 
   @override
@@ -58,7 +68,7 @@ class _SixPageLiteState extends State<SixPageLite> {
               Todo todo = Todo();
               todo.id = strMemList.length;
               todo.description = _controller.text;
-              todo.isCheck = 0;
+              todo.ischeck = 0;
               databaseHelper.insert(todo);
               _controller.clear();
               FocusScope.of(context).requestFocus(FocusNode());
