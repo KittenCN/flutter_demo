@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import 'six_page_sqlite_dao.dart';
 
@@ -13,15 +14,27 @@ class _SixPageLiteState extends State<SixPageLite> {
   final TextEditingController _controller = TextEditingController();
   var strMemList = [];
   var boolMemList = [];
+  var intIdList = [];
+  int intIndex = 0;
   DatabaseHelper databaseHelper = DatabaseHelper();
 
   Future getMemList() async {
     List list = await databaseHelper.getMemList();
     setState(() {
+      strMemList = [];
+      boolMemList = [];
       for (int i = 0; i < list.length; i++) {
+        intIdList.add(list[i].id);
         strMemList.add(list[i].description);
-        boolMemList.add(list[i].ischeck);
+        boolMemList.add(list[i].ischeck==1?true:false);
       }
+    });
+  }
+
+  Future getCount() async {
+    int? count = await databaseHelper.getCount();
+    setState(() {
+      intIndex = count! + 1;
     });
   }
 
@@ -31,7 +44,7 @@ class _SixPageLiteState extends State<SixPageLite> {
     _controller.addListener(() {
       setState(() {
         getMemList();
-        // strMemList = _controller.text.split(',');  
+        // strMemList = _controller.text.split(',');
         // boolMemList = strMemList.map((str) => str.isNotEmpty).toList();
       });
     });
@@ -64,9 +77,9 @@ class _SixPageLiteState extends State<SixPageLite> {
           onPressed: () {
             setState(() {
               strMemList.add(_controller.text);
-              boolMemList.add(0);
+              boolMemList.add(false);
               Todo todo = Todo();
-              todo.id = strMemList.length;
+              todo.id = intIndex;
               todo.description = _controller.text;
               todo.ischeck = 0;
               databaseHelper.insert(todo);
@@ -98,6 +111,11 @@ class _SixPageLiteState extends State<SixPageLite> {
                 onChanged: (bool? value) {
                   setState(() {
                     boolMemList[index] = boolMemList[index] ? false : true;
+                    Todo todo = Todo();
+                    todo.id = intIdList[index];
+                    todo.description = strMemList[index];
+                    todo.ischeck = boolMemList[index] ? 1 : 0;
+                    databaseHelper.update(todo);
                     FocusScope.of(context).requestFocus(FocusNode());
                   });
                 },

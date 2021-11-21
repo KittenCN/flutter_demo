@@ -28,6 +28,10 @@ class DatabaseHelper {
 
   Future<int> insert(Todo todo) async {
     var db = await database;
+    if(todo.id == 0){
+      int? count = await getCount();
+      todo.id = count! + 1;
+    }
     var result = await db.insert('todo', todo.toMap());
     return result;
   }
