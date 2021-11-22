@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:path/path.dart';
-import 'package:sqflite/sqflite.dart';
+// import 'package:path/path.dart';
+// import 'package:sqflite/sqflite.dart';
 import 'six_page_sqlite_dao.dart';
 
 class SixPageLite extends StatefulWidget {
